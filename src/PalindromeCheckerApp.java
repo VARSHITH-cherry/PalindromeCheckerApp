@@ -2,81 +2,62 @@ public class PalindromeCheckerApp {
 
     // ================= UC3 - Reverse String Method =================
     public static boolean reverseCheck(String input) {
-
         String reversed = "";
-
         for (int i = input.length() - 1; i >= 0; i--) {
             reversed += input.charAt(i);
         }
-
         return input.equals(reversed);
     }
 
     // ================= UC4 - Array Two Pointer =================
     public static boolean arrayCheck(String input) {
-
         char[] arr = input.toCharArray();
-
         int left = 0;
         int right = arr.length - 1;
-
         while (left < right) {
             if (arr[left] != arr[right])
                 return false;
             left++;
             right--;
         }
-
         return true;
     }
 
     // ================= UC5 - Stack =================
     public static boolean stackCheck(String input) {
-
         java.util.Stack<Character> stack = new java.util.Stack<>();
-
         for (char ch : input.toCharArray())
             stack.push(ch);
-
         for (char ch : input.toCharArray())
             if (ch != stack.pop())
                 return false;
-
         return true;
     }
 
     // ================= UC6 - Queue + Stack =================
     public static boolean queueStackCheck(String input) {
-
         java.util.Queue<Character> queue = new java.util.LinkedList<>();
         java.util.Stack<Character> stack = new java.util.Stack<>();
-
         for (char ch : input.toCharArray()) {
             queue.add(ch);
             stack.push(ch);
         }
-
         while (!queue.isEmpty()) {
             if (!queue.remove().equals(stack.pop()))
                 return false;
         }
-
         return true;
     }
 
     // ================= UC7 - Deque =================
     public static boolean dequeCheck(String input) {
-
         java.util.Deque<Character> deque = new java.util.ArrayDeque<>();
-
         for (char ch : input.toCharArray())
             deque.add(ch);
-
         while (deque.size() > 1) {
             if (!deque.removeFirst().equals(deque.removeLast()))
                 return false;
         }
-
         return true;
     }
 
@@ -84,38 +65,25 @@ public class PalindromeCheckerApp {
     static class Node {
         char data;
         Node next;
-
-        Node(char data) {
-            this.data = data;
-        }
+        Node(char data) { this.data = data; }
     }
 
     public static boolean linkedListCheck(String input) {
-
         Node head = null;
         Node tail = null;
-
-        // Convert string to linked list
         for (char ch : input.toCharArray()) {
             Node newNode = new Node(ch);
-            if (head == null) {
-                head = tail = newNode;
-            } else {
-                tail.next = newNode;
-                tail = newNode;
-            }
+            if (head == null) head = tail = newNode;
+            else { tail.next = newNode; tail = newNode; }
         }
 
-        // Find middle using fast & slow pointer
         Node slow = head;
         Node fast = head;
-
         while (fast != null && fast.next != null) {
             slow = slow.next;
             fast = fast.next.next;
         }
 
-        // Reverse second half
         Node prev = null;
         while (slow != null) {
             Node next = slow.next;
@@ -124,34 +92,35 @@ public class PalindromeCheckerApp {
             slow = next;
         }
 
-        // Compare halves
         Node first = head;
         Node second = prev;
-
         while (second != null) {
-            if (first.data != second.data)
-                return false;
-
+            if (first.data != second.data) return false;
             first = first.next;
             second = second.next;
         }
-
         return true;
     }
 
     // ================= UC9 - Recursive Method =================
     public static boolean recursiveCheck(String str, int start, int end) {
-
-        // Base condition
-        if (start >= end)
-            return true;
-
-        // Mismatch
-        if (str.charAt(start) != str.charAt(end))
-            return false;
-
-        // Recursive call
+        if (start >= end) return true;
+        if (str.charAt(start) != str.charAt(end)) return false;
         return recursiveCheck(str, start + 1, end - 1);
+    }
+
+    // ================= UC10 - Case & Space Ignored =================
+    public static boolean normalizedCheck(String input) {
+        String clean = input.replaceAll("\\s+", "").toLowerCase();
+        int left = 0;
+        int right = clean.length() - 1;
+        while (left < right) {
+            if (clean.charAt(left) != clean.charAt(right))
+                return false;
+            left++;
+            right--;
+        }
+        return true;
     }
 
     // ================= MAIN METHOD =================
@@ -164,19 +133,17 @@ public class PalindromeCheckerApp {
         System.out.println("Application Started Successfully!");
 
         String word = "madam";
+        String testWord = "Ma dam"; // for UC10
 
         // ================= UC2 - Manual =================
         boolean isPalindrome = true;
-
         for (int i = 0; i < word.length() / 2; i++) {
             if (word.charAt(i) != word.charAt(word.length() - 1 - i)) {
                 isPalindrome = false;
                 break;
             }
         }
-
-        System.out.println(word + (isPalindrome ?
-                " is a Palindrome (UC2)" :
+        System.out.println(word + (isPalindrome ? " is a Palindrome (UC2)" :
                 " is NOT a Palindrome (UC2)"));
 
         // ================= UC3 =================
@@ -213,5 +180,10 @@ public class PalindromeCheckerApp {
         System.out.println(word + (recursiveCheck(word, 0, word.length() - 1) ?
                 " is a Palindrome (UC9 - Recursion)" :
                 " is NOT a Palindrome (UC9 - Recursion)"));
+
+        // ================= UC10 =================
+        System.out.println(testWord + (normalizedCheck(testWord) ?
+                " is a Palindrome (UC10 - Normalized)" :
+                " is NOT a Palindrome (UC10 - Normalized)"));
     }
 }
