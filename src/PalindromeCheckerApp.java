@@ -36,14 +36,33 @@ public class PalindromeCheckerApp {
 
         java.util.Stack<Character> stack = new java.util.Stack<>();
 
-        // Push all characters
         for (char ch : input.toCharArray()) {
             stack.push(ch);
         }
 
-        // Compare with popped elements
         for (char ch : input.toCharArray()) {
             if (ch != stack.pop())
+                return false;
+        }
+
+        return true;
+    }
+
+    // ================= UC6 - Queue + Stack =================
+    public static boolean queueStackCheck(String input) {
+
+        java.util.Queue<Character> queue = new java.util.LinkedList<>();
+        java.util.Stack<Character> stack = new java.util.Stack<>();
+
+        // Insert into both
+        for (char ch : input.toCharArray()) {
+            queue.add(ch);     // FIFO
+            stack.push(ch);    // LIFO
+        }
+
+        // Compare dequeue with pop
+        while (!queue.isEmpty()) {
+            if (!queue.remove().equals(stack.pop()))
                 return false;
         }
 
@@ -76,19 +95,24 @@ public class PalindromeCheckerApp {
                 " is a Palindrome (UC2 - Manual)" :
                 " is NOT a Palindrome (UC2 - Manual)"));
 
-        // ================= UC3 - Reverse Method =================
+        // ================= UC3 =================
         System.out.println(word + (reverseCheck(word) ?
                 " is a Palindrome (UC3 - Reverse)" :
                 " is NOT a Palindrome (UC3 - Reverse)"));
 
-        // ================= UC4 - Array Two Pointer =================
+        // ================= UC4 =================
         System.out.println(word + (arrayCheck(word) ?
                 " is a Palindrome (UC4 - Array Two Pointer)" :
                 " is NOT a Palindrome (UC4 - Array Two Pointer)"));
 
-        // ================= UC5 - Stack =================
+        // ================= UC5 =================
         System.out.println(word + (stackCheck(word) ?
                 " is a Palindrome (UC5 - Stack)" :
                 " is NOT a Palindrome (UC5 - Stack)"));
+
+        // ================= UC6 =================
+        System.out.println(word + (queueStackCheck(word) ?
+                " is a Palindrome (UC6 - Queue + Stack)" :
+                " is NOT a Palindrome (UC6 - Queue + Stack)"));
     }
 }
