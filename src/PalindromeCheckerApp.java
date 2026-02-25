@@ -140,6 +140,20 @@ public class PalindromeCheckerApp {
         }
     }
 
+    // ================= UC13 - Ignore Non-Letter Characters =================
+    public static boolean ignoreNonLettersCheck(String input) {
+        String clean = input.replaceAll("[^a-zA-Z]", "").toLowerCase();
+        int left = 0;
+        int right = clean.length() - 1;
+        while (left < right) {
+            if (clean.charAt(left) != clean.charAt(right))
+                return false;
+            left++;
+            right--;
+        }
+        return true;
+    }
+
     // ================= MAIN METHOD =================
     public static void main(String[] args) {
 
@@ -151,14 +165,12 @@ public class PalindromeCheckerApp {
         System.out.println("=================================");
         System.out.println("Application Started Successfully!");
 
-        // ================= UC12 - User Input =================
+        // UC12 - User Input
         System.out.print("Enter a word or phrase to check: ");
         String inputWord = scanner.nextLine();
-
-        // Use trimmed input for normalized checks
         String word = inputWord.trim();
 
-        // ================= UC2 - Manual =================
+        // UC2 - Manual check
         boolean isPalindrome = true;
         for (int i = 0; i < word.length() / 2; i++) {
             if (word.charAt(i) != word.charAt(word.length() - 1 - i)) {
@@ -169,50 +181,40 @@ public class PalindromeCheckerApp {
         System.out.println(word + (isPalindrome ? " is a Palindrome (UC2)" :
                 " is NOT a Palindrome (UC2)"));
 
-        // ================= UC3 =================
+        // UC3 → UC11
         System.out.println(word + (reverseCheck(word) ?
                 " is a Palindrome (UC3 - Reverse)" :
                 " is NOT a Palindrome (UC3 - Reverse)"));
-
-        // ================= UC4 =================
         System.out.println(word + (arrayCheck(word) ?
                 " is a Palindrome (UC4 - Array)" :
                 " is NOT a Palindrome (UC4 - Array)"));
-
-        // ================= UC5 =================
         System.out.println(word + (stackCheck(word) ?
                 " is a Palindrome (UC5 - Stack)" :
                 " is NOT a Palindrome (UC5 - Stack)"));
-
-        // ================= UC6 =================
         System.out.println(word + (queueStackCheck(word) ?
                 " is a Palindrome (UC6 - Queue + Stack)" :
                 " is NOT a Palindrome (UC6 - Queue + Stack)"));
-
-        // ================= UC7 =================
         System.out.println(word + (dequeCheck(word) ?
                 " is a Palindrome (UC7 - Deque)" :
                 " is NOT a Palindrome (UC7 - Deque)"));
-
-        // ================= UC8 =================
         System.out.println(word + (linkedListCheck(word) ?
                 " is a Palindrome (UC8 - Linked List)" :
                 " is NOT a Palindrome (UC8 - Linked List)"));
-
-        // ================= UC9 =================
         System.out.println(word + (recursiveCheck(word, 0, word.length() - 1) ?
                 " is a Palindrome (UC9 - Recursion)" :
                 " is NOT a Palindrome (UC9 - Recursion)"));
-
-        // ================= UC10 =================
         System.out.println(word + (normalizedCheck(word) ?
                 " is a Palindrome (UC10 - Normalized)" :
                 " is NOT a Palindrome (UC10 - Normalized)"));
 
-        // ================= UC11 =================
         PalindromeService service = new PalindromeService();
         System.out.println(word + (service.checkPalindrome(word) ?
                 " is a Palindrome (UC11 - OOP Service)" :
                 " is NOT a Palindrome (UC11 - OOP Service)"));
+
+        // ================= UC13 =================
+        System.out.println(word + (ignoreNonLettersCheck(word) ?
+                " is a Palindrome (UC13 - Letters Only)" :
+                " is NOT a Palindrome (UC13 - Letters Only)"));
     }
 }
