@@ -54,15 +54,32 @@ public class PalindromeCheckerApp {
         java.util.Queue<Character> queue = new java.util.LinkedList<>();
         java.util.Stack<Character> stack = new java.util.Stack<>();
 
-        // Insert into both
         for (char ch : input.toCharArray()) {
-            queue.add(ch);     // FIFO
-            stack.push(ch);    // LIFO
+            queue.add(ch);
+            stack.push(ch);
         }
 
-        // Compare dequeue with pop
         while (!queue.isEmpty()) {
             if (!queue.remove().equals(stack.pop()))
+                return false;
+        }
+
+        return true;
+    }
+
+    // ================= UC7 - Deque Method =================
+    public static boolean dequeCheck(String input) {
+
+        java.util.Deque<Character> deque = new java.util.ArrayDeque<>();
+
+        // Insert characters into deque
+        for (char ch : input.toCharArray()) {
+            deque.add(ch);
+        }
+
+        // Compare front and rear
+        while (deque.size() > 1) {
+            if (!deque.removeFirst().equals(deque.removeLast()))
                 return false;
         }
 
@@ -81,9 +98,8 @@ public class PalindromeCheckerApp {
 
         String word = "madam";
 
-        // ================= UC2 - Manual Half Check =================
+        // ================= UC2 =================
         boolean isPalindrome = true;
-
         for (int i = 0; i < word.length() / 2; i++) {
             if (word.charAt(i) != word.charAt(word.length() - 1 - i)) {
                 isPalindrome = false;
@@ -114,5 +130,10 @@ public class PalindromeCheckerApp {
         System.out.println(word + (queueStackCheck(word) ?
                 " is a Palindrome (UC6 - Queue + Stack)" :
                 " is NOT a Palindrome (UC6 - Queue + Stack)"));
+
+        // ================= UC7 =================
+        System.out.println(word + (dequeCheck(word) ?
+                " is a Palindrome (UC7 - Deque)" :
+                " is NOT a Palindrome (UC7 - Deque)"));
     }
 }
