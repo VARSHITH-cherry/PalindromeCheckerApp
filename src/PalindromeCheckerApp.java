@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class PalindromeCheckerApp {
 
     // ================= UC3 - Reverse String Method =================
@@ -141,14 +143,20 @@ public class PalindromeCheckerApp {
     // ================= MAIN METHOD =================
     public static void main(String[] args) {
 
+        Scanner scanner = new Scanner(System.in);
+
         System.out.println("=================================");
         System.out.println("     PALINDROME CHECKER APP      ");
         System.out.println("     Version 1.0                 ");
         System.out.println("=================================");
         System.out.println("Application Started Successfully!");
 
-        String word = "madam";
-        String testWord = "Ma dam"; // for UC10
+        // ================= UC12 - User Input =================
+        System.out.print("Enter a word or phrase to check: ");
+        String inputWord = scanner.nextLine();
+
+        // Use trimmed input for normalized checks
+        String word = inputWord.trim();
 
         // ================= UC2 - Manual =================
         boolean isPalindrome = true;
@@ -197,7 +205,7 @@ public class PalindromeCheckerApp {
                 " is NOT a Palindrome (UC9 - Recursion)"));
 
         // ================= UC10 =================
-        System.out.println(testWord + (normalizedCheck(testWord) ?
+        System.out.println(word + (normalizedCheck(word) ?
                 " is a Palindrome (UC10 - Normalized)" :
                 " is NOT a Palindrome (UC10 - Normalized)"));
 
